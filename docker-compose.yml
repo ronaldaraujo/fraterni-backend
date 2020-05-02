@@ -1,0 +1,51 @@
+version: '2'
+
+volumes:
+
+  fraterni-mysql-data:
+    driver: local
+
+  fraterni-redis-data:
+
+  fraterni-mysql-data:
+    driver: local
+
+
+    driver: local
+
+services:
+  mysql:
+    image: mysql:5.7
+
+    container_name: fraterni-mysql
+    volumes:
+      - fraterni-mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=fraterni
+      - MYSQL_DATABASE=fraterni
+      - MYSQL_USER=fraterni
+      - MYSQL_PASSWORD=fraterni
+
+  cache:
+    image: redis:4.0
+    container_name: fraterni-redis
+    command: --appendonly yes
+    volumes:
+      - fraterni-redis-data:/data
+    ports:
+      - "6380:6379"
+
+  app:
+    image: ambientum/php:7.3-nginx
+
+    container_name: fraterni-app
+
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8081:8080"
+    links:
+    - mysql
+    - cache
