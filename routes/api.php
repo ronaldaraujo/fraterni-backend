@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get("stores", "Api\\StoreController@index")->name("stores.index");
 Route::get("store/me", "Api\\StoreController@me")->name("store.me");
+Route::post("store/take", "Api\\StoreController@take")->name("store.take");
 
 Route::get("institutions", "Api\\InstitutionController@index")->name("institutions.index");
 Route::get("institutions/{id}/show/", "Api\\InstitutionController@show")->name("institutions.show");

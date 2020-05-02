@@ -8,6 +8,7 @@ use App\Store;
 
 class StoreController extends Controller
 {
+    private $store;
     private $stores = [];
     private $me = [];
 
@@ -26,16 +27,17 @@ class StoreController extends Controller
             $this->stores[$i]["image"] = "https://i.picsum.photos/id/" . $i . "/450/450.jpg";
         }
 
-        $store = new Store();
+        $this->store = new Store();
+
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \JansenFelipe\FakerBR\FakerBR($faker));
 
         $this->me["name"] = "Minha Empresa S.A.";
         $this->me["email"] = "contato@minhaempresa.com.br";
         $this->me["cnpj"] = "000000000000";
-        $this->me["balance"] = $store->getBalance();
+        $this->me["balance"] = $this->store->getBalance();
         $this->me["image"] = "https://i.picsum.photos/id/1001/450/450.jpg";
-        
+
         for ($i = 0; $i < 9; $i++) {
             $this->me["transations"][$i] = [
                 "id" => $faker->uuid,
@@ -63,5 +65,35 @@ class StoreController extends Controller
     public function me()
     {
         return response()->json(['me' => $this->me]);
+    }
+
+    public function take(Request $request)
+    {
+        if (!$request["value"]) {
+            return response()->json(['error' => "Informe o valor de Fraterni que deseja sacar."], 400);
+        }
+
+        $balance = $this->store->getBalance();
+
+        if ($balance < $request["value"]) {
+            return response()->json(['error' => "Saldo insuficiente."], 400);
+        }
+
+        if ($request["value"] <= 10) {
+            return response()->json(['error' => "Transações de saques só podem ser feitas a partir de 10 Fraternis."], 400);
+        }
+
+        $fraternis = $balance - $request["value"];
+
+        $real = $request["value"] / 10;
+
+        return response()->json(
+            [
+                "message" => "Saque efetuado com sucesso. Você ainda possui " . $fraternis . " Fraternis e sacou R$ " . $real,
+                "fraternis" => $fraternis,
+                "real" => $real,
+                "hash" => \Hash::make("Fraterni")
+            ]
+        );
     }
 }
