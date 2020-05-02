@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get("institutions", "Api\\InstitutionController@index")->name("institutions.index");
+Route::get("institutions/{id}/show/", "Api\\InstitutionController@show")->name("institutions.show");
+
 Route::get("profile", "Api\\DonorController@index")->name("donor.index");
