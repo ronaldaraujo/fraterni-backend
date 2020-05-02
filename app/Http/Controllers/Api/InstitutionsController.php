@@ -15,6 +15,7 @@ class InstitutionsController extends Controller
         $faker->addProvider(new \JansenFelipe\FakerBR\FakerBR($faker));
 
         for ($i = 0; $i < 50; $i++) { 
+            $this->institutions[$i]["id"] = $faker->uuid;
             $this->institutions[$i]["name"] = $faker->company;
             $this->institutions[$i]["city"] = $faker->city;
             $this->institutions[$i]["state"] = $faker->state;
