@@ -57,6 +57,6 @@ class InstitutionController extends Controller
             }
         }
 
-        return response()->json(["message" => "Não foi encontrado nenhuma instituição para o ID informado."], 404);
+        return response()->json(["error" => "Não foi encontrado nenhuma instituição para o ID informado."], 404);
     }
 }

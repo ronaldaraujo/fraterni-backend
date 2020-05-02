@@ -21,3 +21,6 @@ Route::get("institutions", "Api\\InstitutionController@index")->name("institutio
 Route::get("institutions/{id}/show/", "Api\\InstitutionController@show")->name("institutions.show");
 
 Route::get("profile", "Api\\DonorController@index")->name("donor.index");
+
+Route::post("auth/sign-up", "Api\\AuthController@signUp")->name("auth.sign_up");
+Route::post("auth/sign-in", "Api\\AuthController@signIn")->name("auth.sign_in");
