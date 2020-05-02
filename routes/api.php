@@ -26,4 +26,5 @@ Route::get("profile", "Api\\DonorController@index")->name("donor.index");
 Route::post("auth/sign-up", "Api\\AuthController@signUp")->name("auth.sign_up");
 Route::post("auth/sign-in", "Api\\AuthController@signIn")->name("auth.sign_in");
 
-Route::post("payment", "Api\\PaymentController@index")->name("payment.index");
+Route::post("payment/donation", "Api\\PaymentController@donation")->name("payment.donation");
+Route::get("payment/sale", "Api\\PaymentController@sale")->name("payment.sale");

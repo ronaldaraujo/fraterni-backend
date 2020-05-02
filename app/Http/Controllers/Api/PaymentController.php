@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
-    private $wallet = 10;
     private $donor;
 
     public function __construct()
@@ -16,7 +15,21 @@ class PaymentController extends Controller
         $this->donor = new Donor();
     }
 
-    public function index(Request $request)
+    public function sale(Request $request)
+    {
+        if (!$request["amount"] || !$request["fraterni"]) {
+            return response()->json(["error" => "Os seguintes campos são obrigatórios: Valor total da venda e Quantidade de Fraternis."]);
+        }
+
+        $request["amount"] = 100;
+        $request["fraterni"] = 10;
+
+        $total = $request["amount"] - ($request["fraterni"] / 10);
+
+        return response()->json(["Fraterni aplicado com sucesso. O valor restante da compra é: R$ " . $total]);
+    }
+
+    public function donation(Request $request)
     {
         if (!$request["name_card"] || !$request["number_card"] || !$request["cvv"] || !$request["value"]) {
             return response()->json(["error" => "Os seguintes campos são obrigatórios: Nome igual ao do cartão, Número do cartão, CCV (código de segurança) e Valor da doação."], 400);

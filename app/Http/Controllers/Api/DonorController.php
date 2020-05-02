@@ -23,6 +23,7 @@ class DonorController extends Controller
         $this->profile["email"] = "f.ronaldaraujo@gmail.com";
         $this->profile["balance"] = $donor->getBalance() . " Fraternis";
         $this->profile["image"] = "https://api.adorable.io/avatars/285/f.ronaldaraujo@gmail.com";
+        $this->profile["token"] = str_random(5);
 
         for ($i = 0; $i < 9; $i++) {
             $this->profile["transations"][$i] = [
