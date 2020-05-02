@@ -21,6 +21,7 @@ class InstitutionsController extends Controller
             $this->institutions[$i]["state"] = $faker->state;
             $this->institutions[$i]["cnpj"] = $faker->cnpj;
             $this->institutions[$i]["description"] = $faker->text;
+            $this->institutions[$i]["image"] = "https://i.picsum.photos/id/" . $i . "/450/450.jpg";
         }
 
         
