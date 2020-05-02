@@ -22,6 +22,7 @@ Route::post("store/take", "Api\\StoreController@take")->name("store.take");
 
 Route::get("institutions", "Api\\InstitutionController@index")->name("institutions.index");
 Route::get("institutions/{id}/show/", "Api\\InstitutionController@show")->name("institutions.show");
+Route::post("institution/take", "Api\\InstitutionController@take")->name("institution.take");
 
 Route::get("profile", "Api\\DonorController@index")->name("donor.index");
 

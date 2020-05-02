@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Institution;
 
 class InstitutionController extends Controller
 {
     private $institutions = [];
+    private $institution;
 
     public function __construct()
     {
+        $this->institution = new Institution();
+
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \JansenFelipe\FakerBR\FakerBR($faker));
 
@@ -58,5 +62,35 @@ class InstitutionController extends Controller
         }
 
         return response()->json(["error" => "Não foi encontrado nenhuma instituição para o ID informado."], 404);
+    }
+
+    public function take(Request $request)
+    {
+        if (!$request["value"]) {
+            return response()->json(['error' => "Informe o valor de Fraterni que deseja sacar."], 400);
+        }
+
+        $balance = $this->institution->getBalance();
+
+        if ($balance < $request["value"]) {
+            return response()->json(['error' => "Saldo insuficiente."], 400);
+        }
+
+        if ($request["value"] <= 10) {
+            return response()->json(['error' => "Transações de saques só podem ser feitas a partir de 10 Fraternis."], 400);
+        }
+
+        $fraternis = $balance - $request["value"];
+
+        $real = $request["value"] / 10;
+
+        return response()->json(
+            [
+                "message" => "Saque efetuado com sucesso. Você ainda possui " . $fraternis . " Fraternis e sacou R$ " . $real,
+                "fraternis" => $fraternis,
+                "real" => $real,
+                "hash" => \Hash::make("Fraterni")
+            ]
+        );
     }
 }
