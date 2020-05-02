@@ -21,9 +21,6 @@ class PaymentController extends Controller
             return response()->json(["error" => "Os seguintes campos são obrigatórios: Valor total da venda e Quantidade de Fraternis."]);
         }
 
-        $request["amount"] = 100;
-        $request["fraterni"] = 10;
-
         $total = $request["amount"] - ($request["fraterni"] / 10);
 
         return response()->json(["Fraterni aplicado com sucesso. O valor restante da compra é: R$ " . $total]);
