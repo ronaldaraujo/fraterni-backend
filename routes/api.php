@@ -13,9 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::get("stores", "Api\\StoreController@index")->name("stores.index");
 Route::get("store/me", "Api\\StoreController@me")->name("store.me");
 Route::post("store/take", "Api\\StoreController@take")->name("store.take");
